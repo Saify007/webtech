@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title> AJAX CASE BOX</title>
+<script>
+function postComment() {
+    // Creating the XMLHttpRequest object
+    var request = new XMLHttpRequest();
+    
+    // Instantiating the request object
+    request.open("POST", "confirmation.php");
+    
+    // Defining event listener for readystatechange event
+    request.onreadystatechange = function() {
+        // Check if the request is compete and was successful
+        if(this.readyState === 4 && this.status === 200) {
+            // Inserting the response from server into an HTML element
+            document.getElementById("result").innerHTML = this.responseText;
+        }
+    };
+    
+    // Retrieving the form data
+    var myForm = document.getElementById("myForm");
+    var formData = new FormData(myForm);
+
+    // Sending the request to the server
+    request.send(formData);
+}
+</script>
+</head>
+<body>
+    <form id="myForm">
+        <label>Name:</label>
+        <div><input type="text" name="name"></div>
+        <br>
+        <label>Problem:</label>
+        <div><textarea name="comment"></textarea></div>
+        <p><button type="button" onclick="postComment()">Post</button></p>
+    </form>    
+    <div id="result">
+        <p>  Drop Your Problem In This Box </p>
+    </div>    
+</body>
+</html>
+
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+function clickCounter() {
+  if(typeof(Storage) !== "undefined") {
+    if (sessionStorage.clickcount) {
+      sessionStorage.clickcount = Number(sessionStorage.clickcount)+1;
+    } else {
+      sessionStorage.clickcount = 1;
+    }
+    document.getElementById("result").innerHTML = "You have submit the problem  " + sessionStorage.clickcount + " time(s) in this session.";
+  } else {
+    document.getElementById("result").innerHTML = "Sorry, your browser does not support web storage...";
+  }
+}
+</script>
+</head>
+<body>
+<p><button onclick="clickCounter()" type="button">Click After submit</button></p>
+<div id="result"></div>
+
+</body>
+</html>
+
+
+
